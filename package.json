@@ -1,0 +1,40 @@
+{
+  "name": "bwcda-backend",
+  "version": "1.0.0",
+  "description": "Backend for celebrity dead or alive app, lambda school build project",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.20.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.19.1",
+    "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "jest": "^24.8.0"
+  },
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bw-celebrity-dead-or-alive/bwcda-backend.git"
+  },
+  "keywords": [
+    "Express",
+    "Celebrity",
+    "API",
+    "API",
+    "knex",
+    "sqlite",
+    "authentication"
+  ],
+  "author": "Ikechukwu Eze",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bw-celebrity-dead-or-alive/bwcda-backend/issues"
+  },
+  "homepage": "https://github.com/bw-celebrity-dead-or-alive/bwcda-backend#readme"
+}
