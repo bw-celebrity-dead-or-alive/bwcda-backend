@@ -7,6 +7,11 @@ const get = filter =>
         .where(filter)
         .first();
 
+const paginate = (lim = 15, off = 0) =>
+  db('celebrities')
+    .limit(lim)
+    .offset(off);
+
 const create = celebrity =>
   db('celebrities')
     .insert(celebrity)
@@ -20,15 +25,19 @@ const update = (id, changes) =>
 
 const remove = async id => {
   const celeb = await get({ id });
-  db('celebrities')
-    .where({ id })
-    .del()
-    .then(count => (count > 0 ? celeb : null));
+  if (celeb) {
+    await db('celebrities')
+      .where({ id })
+      .del();
+    return celeb;
+  }
+  return null;
 };
 
 module.exports = {
   get,
   create,
   update,
-  remove
+  remove,
+  paginate
 };
