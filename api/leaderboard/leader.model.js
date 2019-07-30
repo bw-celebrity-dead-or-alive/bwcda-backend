@@ -11,7 +11,7 @@ const paginate = (lim = 15, off = 0) =>
 const create = leader =>
   db('leaderboard')
     .insert(leader)
-    .then(([id]) => get({ id })[0]);
+    .then(([id]) => get({ id }));
 
 const update = (id, changes) =>
   db('leaderboard')
