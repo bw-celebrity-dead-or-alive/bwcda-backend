@@ -53,7 +53,7 @@ router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const celeb = await leaderDB.update(id, req.body);
-    res.status(200).json(celeb);
+    res.status(200).json(celeb[0]);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -64,7 +64,7 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const celeb = await leaderDB.remove(id);
     if (celeb) {
-      res.status(200).json(celeb);
+      res.status(200).json(celeb[0]);
     } else {
       res.status(404).json({
         message: 'No celebrity with that id'

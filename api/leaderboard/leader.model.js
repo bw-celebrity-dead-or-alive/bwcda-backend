@@ -17,7 +17,7 @@ const update = (id, changes) =>
   db('leaderboard')
     .where({ id })
     .update(changes)
-    .then(count => (count > 0 ? get({ id })[0] : null));
+    .then(count => (count > 0 ? get({ id }) : null));
 
 const remove = async id => {
   const leader = await get({ id });
