@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const Axios = require('axios');
 const CelebDB = require('./celeb.model');
 
 router.get('/', async (req, res) => {
@@ -17,15 +16,6 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const celeb = await CelebDB.get({ id });
     if (celeb) {
-      const search = await Axios.get(
-        `https://api.tvmaze.com/search/people?q=${encodeURI(celeb.name)}`
-      );
-      const image = search.data.filter(
-        pi => pi.score > 30 && pi.person && pi.person.image
-      )[0].person.image.medium;
-
-      celeb.image_url = image;
-
       res.status(200).json(celeb);
     } else {
       res.status(404).json({ message: 'No celebrity with that id' });
@@ -39,13 +29,7 @@ router.get('/picture/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const celeb = await CelebDB.get({ id });
-    const search = await Axios.get(
-      `https://api.tvmaze.com/search/people?q=${encodeURI(celeb.name)}`
-    );
-    const image = search.data.filter(
-      pi => pi.score > 30 && pi.person && pi.person.image
-    )[0].person.image.medium;
-    res.status(200).json(image);
+    res.status(200).json(celeb.image_url);
   } catch (error) {
     res.status(500).json(error);
   }
