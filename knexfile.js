@@ -1,5 +1,3 @@
-// Update with your config settings.
-
 module.exports = {
   development: {
     client: 'sqlite3',
@@ -41,12 +39,26 @@ module.exports = {
       directory: './data/prod/seeds'
     },
     client: 'pg',
-    version: '11',
-    connection: {
-      host: '127.0.0.1',
-      user: 'ikechukwu',
-      password: '',
-      database: 'ikechukwu'
+    connection: `${process.env.DATABASE_URL}?ssl=true`
+
+    // production: {
+    //   pool: {
+    //     min: 2,
+    //     max: 10
+    //   },
+    //   migrations: {
+    //     directory: './data/prod/migrations'
+    //   },
+    //   seeds: {
+    //     directory: './data/prod/seeds'
+    //   },
+    //   client: 'pg',
+    //   version: '11',
+    //   connection: {
+    //     host: '127.0.0.1',
+    //     user: 'ikechukwu',
+    //     password: '',
+    //     database: 'ikechukwu'
+    // }
   }
-}
 };
