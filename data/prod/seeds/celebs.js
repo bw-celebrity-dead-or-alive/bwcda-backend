@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const celebs = require('../../cels');
+const celebs = require('../../../cels');
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('celebrities')
