@@ -11,6 +11,19 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/name', async (req, res) => {
+  try {
+    const { firstName, lastName } = req.body;
+    const celeb = await leaderDB.get({ firstName, lastName });
+    if (celeb) {
+      res.status(200).json(celeb);
+    } else {
+      res.status(404).json({ message: 'No celebrity with that id' });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
