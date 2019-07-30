@@ -1,5 +1,11 @@
 const router = require('express').Router();
 const leaderDB = require('./leader.model');
+const {
+  validatePBody,
+  validateRBody,
+  validatePBodyOR,
+  validatePlayer
+} = require('./leader.middleware');
 
 router.get('/', async (req, res) => {
   const { page, limit } = req.query;
@@ -11,7 +17,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/name', async (req, res) => {
+router.get('/name', validateRBody, async (req, res) => {
   try {
     const { firstName, lastName } = req.body;
     const leader = await leaderDB.get({ firstName, lastName });
@@ -41,7 +47,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validatePBody, async (req, res) => {
   try {
     const player = await leaderDB.create(req.body);
     res.status(201).json(player[0]);
@@ -49,7 +55,8 @@ router.post('/', async (req, res) => {
     res.status(500).json(error);
   }
 });
-router.put('/:id', async (req, res) => {
+
+router.put('/:id', validatePBodyOR, async (req, res) => {
   try {
     const { id } = req.params;
     const celeb = await leaderDB.update(id, req.body);
@@ -59,7 +66,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', validatePlayer, async (req, res) => {
   try {
     const { id } = req.params;
     const celeb = await leaderDB.remove(id);
