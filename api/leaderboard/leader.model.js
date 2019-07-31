@@ -40,6 +40,7 @@ const getScore = id =>
 const create = score =>
   db('leaderboard')
     .insert(score)
+    .returning('id')
     .then(([id]) => getScore(id));
 
 const update = (id, changes) =>
