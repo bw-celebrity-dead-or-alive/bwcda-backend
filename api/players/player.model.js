@@ -1,11 +1,14 @@
 const db = require('../../dbConfig');
 
-const get = (id, lim = 20) =>
+const get = (id, lim = 20, off = 0) =>
   !id
-    ? db('players').limit(lim)
+    ? db('players')
+        .limit(lim)
+        .offset(off)
     : db('players')
         .where({ id })
         .first();
+
 const getByEmail = email =>
   db('players')
     .where({ email })
@@ -42,10 +45,13 @@ const update = (id, changes) =>
 const remove = async id => {
   try {
     const player = await get(id);
-    await db('players')
-      .where({ id })
-      .del();
-    return player;
+    if (player) {
+      await db('players')
+        .where({ id })
+        .del();
+      return player;
+    }
+    return null;
   } catch (error) {
     return null;
   }
