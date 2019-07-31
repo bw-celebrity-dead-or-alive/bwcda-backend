@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const leaderDB = require('./leader.model');
+require('dotenv').config();
 const {
   validatePBody,
   validateRBody,
