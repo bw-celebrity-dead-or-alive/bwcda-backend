@@ -11,6 +11,7 @@ const {
 router.get('/', async (req, res) => {
   const { page, limit } = req.query;
   try {
+    // const leader = await leaderDB.newget();
     const leader = await leaderDB.paginate(limit, (page - 1) * limit);
     res.status(200).json(leader);
   } catch (error) {
