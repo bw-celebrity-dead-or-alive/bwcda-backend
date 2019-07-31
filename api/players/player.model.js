@@ -6,6 +6,10 @@ const get = (id, lim = 20) =>
     : db('players')
         .where({ id })
         .first();
+const getByEmail = email =>
+  db('players')
+    .where({ email })
+    .first();
 
 const getPlayerScores = id => {
   return db
@@ -49,6 +53,7 @@ const remove = async id => {
 
 module.exports = {
   get,
+  getByEmail,
   getPlayerScores,
   create,
   remove,
