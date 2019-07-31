@@ -2,54 +2,38 @@ const db = require('./leader.model');
 
 module.exports = {
   validatePBody,
-  validateRBody,
   validatePBodyOR,
-  validatePlayer
+  validateScore
 };
 
-async function validatePlayer(req, res, next) {
+async function validateScore(req, res, next) {
   const { id } = req.params;
   try {
-    const player = await db.get({ id });
-    if (player[0]) {
+    const score = await db.getScore(id);
+    if (score) {
       next();
     } else {
-      res
-        .status(404)
-        .json({ message: "The player with that id doesn't exist" });
+      res.status(404).json({ message: "The score with that id doesn't exist" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Couldn't validate the player" });
+    res.status(500).json({ message: "Couldn't validate the score" });
   }
 }
 function validatePBody(req, res, next) {
-  const { firstName, lastName, score } = req.body;
-  if (firstName && lastName && score) {
+  const { player_id, score } = req.body;
+  if (player_id && score) {
     next();
   } else {
-    res
-      .status(400)
-      .json({ message: 'Please provide the firstName, lastName and score' });
+    res.status(400).json({ message: 'Please provide the player_id and score' });
   }
 }
 function validatePBodyOR(req, res, next) {
-  const { firstName, lastName, score } = req.body;
-  if (firstName || lastName || score) {
+  const { player_id, score } = req.body;
+  if (player_id || score) {
     next();
   } else {
     res.status(400).json({
-      message:
-        'Please provide the field you want to update: firstName, lastName or score'
+      message: 'Please provide the field you want to update: player_id or score'
     });
-  }
-}
-function validateRBody(req, res, next) {
-  const { firstName, lastName } = req.body;
-  if (firstName && lastName) {
-    next();
-  } else {
-    res
-      .status(400)
-      .json({ message: 'Please provide the firstName and lastName' });
   }
 }
