@@ -1,34 +1,60 @@
 const db = require('../../dbConfig');
 
-const get = filter =>
-  !filter
-    ? db('leaderboard').orderBy('score', 'desc')
-    : db('leaderboard').where(filter);
+const get = id =>
+  db
+    .select(
+      'l.score',
+      'l.player_id',
+      'l.id',
+      'p.email',
+      'p.name',
+      'l.created_at'
+    )
+    .from('leaderboard as l')
+    .join('players as p', 'l.player_id', 'p.id')
+    .where('p.id', id)
+    .orderBy('score', 'desc');
 
-const paginate = (lim = 15, off = 0) =>
-  db('leaderboard')
+const paginate = (lim = 20, off = 0) =>
+  db
+    .select(
+      'l.score',
+      'l.player_id',
+      'l.id',
+      'p.email',
+      'p.name',
+      'l.created_at'
+    )
+    .from('leaderboard as l')
+    .join('players as p', 'l.player_id', 'p.id')
     .orderBy('score', 'desc')
     .limit(lim)
     .offset(off);
 
-const create = player =>
+const getScore = id =>
   db('leaderboard')
-    .insert(player)
-    .then(([id]) => get({ id }));
+    .where({ id })
+    .first();
+
+// working
+const create = score =>
+  db('leaderboard')
+    .insert(score)
+    .then(([id]) => getScore(id));
 
 const update = (id, changes) =>
   db('leaderboard')
     .where({ id })
     .update(changes)
-    .then(count => (count > 0 ? get({ id }) : null));
+    .then(count => (count > 0 ? getScore(id) : null));
 
 const remove = async id => {
-  const player = await get({ id });
-  if (player[0]) {
+  const score = await getScore(id);
+  if (score) {
     await db('leaderboard')
       .where({ id })
       .del();
-    return player;
+    return score;
   }
   return null;
 };
@@ -36,6 +62,7 @@ const remove = async id => {
 module.exports = {
   get,
   create,
+  getScore,
   update,
   remove,
   paginate
