@@ -22,6 +22,6 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists('players')
-    .dropTableIfExists('leaderboard');
+    .dropTableIfExists('leaderboard')
+    .dropTableIfExists('players');
 };
