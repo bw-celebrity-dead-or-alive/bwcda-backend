@@ -20,8 +20,8 @@ async function validateScore(req, res, next) {
   }
 }
 function validatePBody(req, res, next) {
-  const { player_id, score } = req.body;
-  if (player_id && score) {
+  const { score } = req.body;
+  if (score) {
     next();
   } else {
     res.status(400).json({ message: 'Please provide the player_id and score' });

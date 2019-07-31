@@ -1,5 +1,4 @@
 const db = require('../../dbConfig');
-const lDB = db('leaderboard');
 
 const get = id =>
   db
@@ -32,13 +31,19 @@ const paginate = (lim = 20, off = 0) =>
     .limit(lim)
     .offset(off);
 
-const getScore = id => lDB.where({ id }).first();
+const getScore = id =>
+  db('leaderboard')
+    .where({ id })
+    .first();
 
 // working
-const create = score => lDB.insert(score).then(([id]) => getScore(id));
+const create = score =>
+  db('leaderboard')
+    .insert(score)
+    .then(([id]) => getScore(id));
 
 const update = (id, changes) =>
-  lDB
+  db('leaderboard')
     .where({ id })
     .update(changes)
     .then(count => (count > 0 ? getScore(id) : null));
@@ -46,7 +51,9 @@ const update = (id, changes) =>
 const remove = async id => {
   const score = await getScore(id);
   if (score) {
-    await lDB.where({ id }).del();
+    await db('leaderboard')
+      .where({ id })
+      .del();
     return score;
   }
   return null;
