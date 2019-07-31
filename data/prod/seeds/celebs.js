@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const celebs = require('../../../cels');
+const celebs = require('../../../procels');
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('celebrities')
@@ -9,6 +9,6 @@ exports.seed = function(knex) {
       return knex('celebrities')
         .insert(celebs.slice(0, 150))
         .then(_ => knex('celebrities').insert(celebs.slice(150, 300)))
-        .then(_ => knex('celebrities').insert(celebs.slice(300, 391)));
+        .then(_ => knex('celebrities').insert(celebs.slice(300, 350)));
     });
 };
