@@ -38,7 +38,7 @@ router.post('/', validatePBody, async (req, res) => {
     const score = await leaderDB.create(req.body);
     res.status(201).json(score);
   } catch (error) {
-    res.status(500).json({ message: "Couldn't add the score" });
+    res.status(500).json({ message: "Couldn't add the score", error });
   }
 });
 
