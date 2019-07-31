@@ -61,4 +61,5 @@ typings/
 .next
 
 #seed
-data/seeds/players.js
+seeds
+data/prod/seeds
