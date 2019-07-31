@@ -14,7 +14,9 @@ async function validatePlayer(req, res, next) {
     if (player[0]) {
       next();
     } else {
-      res.status(400).json({ message: "The user with that id doesn't exist" });
+      res
+        .status(404)
+        .json({ message: "The player with that id doesn't exist" });
     }
   } catch (error) {
     res.status(500).json({ message: "Couldn't validate the player" });
