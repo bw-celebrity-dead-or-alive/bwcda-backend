@@ -1,16 +1,19 @@
 const db = require('../../dbConfig');
 
 const get = filter =>
-  !filter ? db('leaderboard') : db('leaderboard').where(filter);
+  !filter
+    ? db('leaderboard').orderBy('score', 'desc')
+    : db('leaderboard').where(filter);
 
 const paginate = (lim = 15, off = 0) =>
   db('leaderboard')
+    .orderBy('score', 'desc')
     .limit(lim)
     .offset(off);
 
-const create = leader =>
+const create = player =>
   db('leaderboard')
-    .insert(leader)
+    .insert(player)
     .then(([id]) => get({ id }));
 
 const update = (id, changes) =>
@@ -20,12 +23,12 @@ const update = (id, changes) =>
     .then(count => (count > 0 ? get({ id }) : null));
 
 const remove = async id => {
-  const leader = await get({ id });
-  if (leader[0]) {
+  const player = await get({ id });
+  if (player[0]) {
     await db('leaderboard')
       .where({ id })
       .del();
-    return leader;
+    return player;
   }
   return null;
 };
