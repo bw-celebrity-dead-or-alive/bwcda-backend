@@ -20,10 +20,10 @@ module.exports = {
       filename: './data/testdb.db3'
     },
     migrations: {
-      directory: './data/test_migrations'
+      directory: './data/migrations'
     },
     seeds: {
-      directory: './data/test_seeds'
+      directory: './data/seeds'
     },
     useNullAsDefault: true
   },
