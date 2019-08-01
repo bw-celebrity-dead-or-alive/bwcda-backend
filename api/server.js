@@ -10,6 +10,11 @@ const server = express();
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
+
+server.get('/', (req, res) => {
+  res.status(200).json('Api exposed at /api');
+});
+
 server.use('/api/celebrities', celebRouter);
 server.use('/api/leaderboard', leaderRouter);
 server.use('/api/auth', authRouter);
