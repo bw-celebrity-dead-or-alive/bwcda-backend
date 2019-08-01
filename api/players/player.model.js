@@ -9,10 +9,15 @@ const get = (id, lim = 20, off = 0) =>
         .where({ id })
         .first();
 
-const getByEmail = email =>
-  db('players')
-    .where({ email })
-    .first();
+const getByEmail = email => {
+  try {
+    return db('players')
+      .where({ email })
+      .first();
+  } catch (error) {
+    return null;
+  }
+};
 
 const getPlayerScores = id => {
   return db

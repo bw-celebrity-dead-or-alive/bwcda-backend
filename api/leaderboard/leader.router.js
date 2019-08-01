@@ -6,6 +6,7 @@ const {
   validatePBodyOR,
   validateScore
 } = require('./leader.middleware');
+const { authenticate } = require('../players/player.middleware');
 
 router.get('/', async (req, res) => {
   const { page, limit } = req.query;
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/players/:id', async (req, res) => {
+router.get('/players/:id', authenticate, async (req, res) => {
   try {
     const { id } = req.params;
     const leader = await leaderDB.get(id);
@@ -42,7 +43,7 @@ router.post('/', validatePBody, async (req, res) => {
   }
 });
 
-router.put('/:id', validatePBodyOR, async (req, res) => {
+router.put('/:id', validatePBodyOR, authenticate, async (req, res) => {
   try {
     const { id } = req.params;
     const score = await leaderDB.update(id, req.body);
@@ -58,7 +59,7 @@ router.put('/:id', validatePBodyOR, async (req, res) => {
   }
 });
 
-router.delete('/:id', validateScore, async (req, res) => {
+router.delete('/:id', validateScore, authenticate, async (req, res) => {
   try {
     const { id } = req.params;
     const score = await leaderDB.remove(id);

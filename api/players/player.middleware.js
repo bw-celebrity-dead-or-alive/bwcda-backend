@@ -40,12 +40,12 @@ function validateBodyOR(req, res, next) {
 }
 
 function authenticate(req, res, next) {
-  const { token } = req.headers;
+  const token = req.headers.authorization;
   if (token) {
-    const isValid = jwt.verify(token, process.env.JWT_SECRET);
-    if (isValid) {
+    try {
+      jwt.verify(token, process.env.JWT_SECRET);
       next();
-    } else {
+    } catch (error) {
       res.status(401).json({ message: 'Invalid token, try login in again' });
     }
   } else {

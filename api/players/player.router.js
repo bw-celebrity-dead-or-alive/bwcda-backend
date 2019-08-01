@@ -28,14 +28,23 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// router.post('/', validatePBody, async (req, res) => {
-//   try {
-//     const score = await leaderDB.create(req.body);
-//     res.status(201).json(score);
-//   } catch (error) {
-//     res.status(500).json({ message: "Couldn't add the score", error });
-//   }
-// });
+router.get('/:id/scores', authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const scores = await playeDB.getPlayerScores(id);
+    if (scores[0]) {
+      res.status(200).json(scores);
+    } else {
+      res.status(404).json({
+        message: 'No scores for player with that id'
+      });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Couldn't retrieve the scores for the player" });
+  }
+});
 
 router.put('/:id', validateBodyOR, authenticate, async (req, res) => {
   try {
