@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "cross-env DB_ENV=testing jest --watch --verbose"
+    "test": "jest --watch --verbose"
   },
   "jest": {
     "testEnvironment": "node"
