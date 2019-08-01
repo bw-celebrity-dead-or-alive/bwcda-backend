@@ -17,12 +17,17 @@
     "sqlite3": "^4.0.9"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "eslint": "^6.1.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "supertest": "^4.0.2"
   },
   "scripts": {
     "start": "node index.js",
-    "test": "jest --watch"
+    "test": "cross-env DB_ENV=testing jest --watch --verbose"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
