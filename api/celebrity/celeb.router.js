@@ -5,6 +5,7 @@ const {
   validatePBody,
   validatePBodyOR
 } = require('./celeb.middleware');
+const { authenticate } = require('../players/player.middleware');
 
 router.get('/', async (req, res) => {
   const { page, limit } = req.query;
@@ -59,7 +60,7 @@ router.put('/:id', validatePBodyOR, async (req, res) => {
   }
 });
 
-router.delete('/:id', validateCelebrity, async (req, res) => {
+router.delete('/:id', validateCelebrity, authenticate, async (req, res) => {
   try {
     const { id } = req.params;
     const celeb = await CelebDB.remove(id);
