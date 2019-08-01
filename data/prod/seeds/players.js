@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(12);
 
 exports.seed = function(knex) {
-  // Deletes ALL existing entries
   return knex('players')
     .del()
     .then(function() {
