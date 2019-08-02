@@ -22,8 +22,8 @@ async function validateCelebrity(req, res, next) {
   }
 }
 function validatePBody(req, res, next) {
-  const { name, info, birth, death } = req.body;
-  if (name && info && birth && death) {
+  const { name, info, birth } = req.body;
+  if (name && info && birth) {
     next();
   } else {
     res.status(400).json({

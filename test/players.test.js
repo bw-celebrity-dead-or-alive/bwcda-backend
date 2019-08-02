@@ -19,19 +19,20 @@ beforeAll(async () => {
 });
 
 describe('Players route', () => {
-  it('[GET] /api/players', () => {
+  it('[GET] /api/players', done => {
     return app
       .get('/api/players?page=1&limit=5')
       .expect(200)
       .expect('Content-Type', /json/)
       .then(res => {
         expect(res.body.length).toBe(5);
+        done();
       })
       .catch(error => {
         console.log(error);
       });
   });
-  it('[GET] /api/players/:id', () => {
+  it('[GET] /api/players/:id', done => {
     return app
       .get('/api/players/1')
       .expect(200)
@@ -40,12 +41,13 @@ describe('Players route', () => {
         expect(Object.keys(res.body)).toEqual(
           expect.arrayContaining(['id', 'name', 'email', 'password'])
         );
+        done();
       })
       .catch(error => {
         console.log(error);
       });
   });
-  it('[GET] /api/players/:id/scores', () => {
+  it('[GET] /api/players/:id/scores', done => {
     return app
       .get('/api/players/5/scores')
       .set('Authorization', token)
@@ -62,12 +64,13 @@ describe('Players route', () => {
             'created_at'
           ])
         );
+        done();
       })
       .catch(error => {
         console.log(error);
       });
   });
-  it('[POST] /api/auth/register adds a player to DB', () => {
+  it('[POST] /api/auth/register adds a player to DB', done => {
     return app
       .post('/api/auth/register')
       .set('Accept', 'application/json')
@@ -77,12 +80,13 @@ describe('Players route', () => {
       .then(res => {
         id = res.body.id;
         expect(res.body.name).toEqual('Stan White');
+        done();
       })
       .catch(error => {
         console.log(error);
       });
   });
-  it('[PUT] /api/players/:id update a player', () => {
+  it('[PUT] /api/players/:id update a player', done => {
     return app
       .put(`/api/players/${id}`)
       .set('Accept', 'application/json')
@@ -92,12 +96,13 @@ describe('Players route', () => {
       .expect('Content-Type', /json/)
       .then(res => {
         expect(res.body.email).toBe('stan@dealing.com');
+        done();
       })
       .catch(error => {
         console.log(error);
       });
   });
-  it('[DELETE] /api/players/:id removes a score from the leaderboard', () => {
+  it('[DELETE] /api/players/:id removes a score from the leaderboard', done => {
     return app
       .delete(`/api/players/${id}`)
       .set('Accept', 'application/json')
@@ -106,6 +111,7 @@ describe('Players route', () => {
       .expect('Content-Type', /json/)
       .then(res => {
         expect(res.body.name).toBe(player.name);
+        done();
       })
       .catch(error => {
         console.log(error);

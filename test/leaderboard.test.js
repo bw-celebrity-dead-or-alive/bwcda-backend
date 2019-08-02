@@ -17,19 +17,20 @@ beforeAll(async () => {
 });
 
 describe('Leaderboard route', () => {
-  it('[GET] /api/leaderboard', () => {
+  it('[GET] /api/leaderboard', done => {
     return app
       .get('/api/leaderboard?page=1&limit=5')
       .expect(200)
       .expect('Content-Type', /json/)
       .then(res => {
         expect(res.body.length).toBe(5);
+        done();
       })
       .catch(error => {
-        console.log(error);
+        return done(error);
       });
   });
-  it('[GET] /api/leaderboard/players/:id', () => {
+  it('[GET] /api/leaderboard/players/:id', done => {
     return app
       .get('/api/leaderboard/players/5')
       .set('Authorization', token)
@@ -46,12 +47,13 @@ describe('Leaderboard route', () => {
             'created_at'
           ])
         );
+        done();
       })
       .catch(error => {
-        console.log(error);
+        return done(error);
       });
   });
-  it('[POST] /api/leaderboard/ add a score to the leaderboard', () => {
+  it('[POST] /api/leaderboard/ add a score to the leaderboard', done => {
     return app
       .post('/api/leaderboard')
       .set('Accept', 'application/json')
@@ -61,12 +63,13 @@ describe('Leaderboard route', () => {
       .then(res => {
         id = res.body.id;
         expect(res.body.score).toEqual(45);
+        done();
       })
       .catch(error => {
-        console.log(error);
+        return done(error);
       });
   });
-  it('[PUT] /api/leaderboard/:id update a score on the leaderboard', () => {
+  it('[PUT] /api/leaderboard/:id update a score on the leaderboard', done => {
     return app
       .put(`/api/leaderboard/${id}`)
       .set('Accept', 'application/json')
@@ -76,12 +79,13 @@ describe('Leaderboard route', () => {
       .expect('Content-Type', /json/)
       .then(res => {
         expect(res.body.score).toBe(543);
+        done();
       })
       .catch(error => {
-        console.log(error);
+        return done(error);
       });
   });
-  it('[DELETE] /api/leaderboard/:id removes a score from the leaderboard', () => {
+  it('[DELETE] /api/leaderboard/:id removes a score from the leaderboard', done => {
     return app
       .delete(`/api/leaderboard/${id}`)
       .set('Accept', 'application/json')
@@ -90,9 +94,10 @@ describe('Leaderboard route', () => {
       .expect('Content-Type', /json/)
       .then(res => {
         expect(res.body.score).toBe(543);
+        done();
       })
       .catch(error => {
-        console.log(error);
+        return done(error);
       });
   });
 });
