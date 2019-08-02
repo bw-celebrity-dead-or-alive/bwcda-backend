@@ -15,6 +15,7 @@ const paginate = (lim = 15, off = 0) =>
 const create = celebrity =>
   db('celebrities')
     .insert(celebrity)
+    .returning('id')
     .then(([id]) => get({ id }));
 
 const update = (id, changes) =>
