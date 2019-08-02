@@ -1,7 +1,6 @@
 const server = require('../api/server');
 const request = require('supertest');
 const app = request(server);
-
 describe('Server', () => {
   it('[GET] / works!', () => {
     return app
